@@ -8,3 +8,13 @@ C:\Users\Betsayda\Desktop\Desktop 2\pagination\pagination\obj\x86\Debug\paginati
 C:\Users\Betsayda\Desktop\Desktop 2\pagination\pagination\obj\x86\Debug\pagination.csprojResolveAssemblyReference.cache
 C:\Users\Betsayda\Desktop\Desktop 2\pagination\pagination\bin\Debug\computedIndex.dll
 C:\Users\Betsayda\Desktop\Desktop 2\pagination\pagination\bin\Debug\computedIndex.pdb
+C:\Users\Betsayda\Desktop\clones\csharpPagination\pagination\obj\x86\Debug\pagination.exe
+C:\Users\Betsayda\Desktop\clones\csharpPagination\pagination\obj\x86\Debug\pagination.pdb
+C:\Users\Betsayda\Desktop\clones\csharpPagination\pagination\bin\Debug\pagination.exe
+C:\Users\Betsayda\Desktop\clones\csharpPagination\pagination\bin\Debug\pagination.pdb
+C:\Users\Betsayda\Desktop\clones\csharpPagination\pagination\bin\Debug\computedIndex.dll
+C:\Users\Betsayda\Desktop\clones\csharpPagination\pagination\bin\Debug\computedIndex.pdb
+C:\Users\Betsayda\Desktop\clones\csharpPagination\pagination\obj\x86\Debug\pagination.csprojResolveAssemblyReference.cache
+C:\Users\Betsayda\Desktop\clones\csharpPagination\pagination\obj\x86\Debug\pagination.Form1.resources
+C:\Users\Betsayda\Desktop\clones\csharpPagination\pagination\obj\x86\Debug\pagination.Properties.Resources.resources
+C:\Users\Betsayda\Desktop\clones\csharpPagination\pagination\obj\x86\Debug\pagination.csproj.GenerateResource.Cache

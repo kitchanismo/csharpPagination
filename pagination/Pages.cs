@@ -19,8 +19,9 @@ namespace pagination
         {
             
             Connected();
-            query = "SELECT * FROM tbltest where id >=  " + fromPage + "   AND id <= " + toPage + " order by id";
-            cmd.CommandText = query;
+            var cond = "WITH newTable AS (SELECT id, item_name, qty, ROW_NUMBER() OVER(ORDER BY id ASC) AS Row FROM tbltest) ";
+            query = "SELECT id, item_name, qty, ROW_NUMBER() OVER(ORDER BY id ASC) AS Row FROM newTable WHERE Row BETWEEN " + fromPage + " AND " + toPage + " ";
+            cmd.CommandText = cond + query;
             cmd.Connection = con;
             cmd.ExecuteNonQuery();
             dr = cmd.ExecuteReader();
