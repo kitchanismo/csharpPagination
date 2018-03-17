@@ -39,7 +39,14 @@
             this.btnnext = new System.Windows.Forms.Button();
             this.btnlast = new System.Windows.Forms.Button();
             this.btnprev = new System.Windows.Forms.Button();
-            this.lblpage = new System.Windows.Forms.Label();
+            this.lblpages = new System.Windows.Forms.Label();
+            this.btnfirst = new System.Windows.Forms.Button();
+            this.btn3 = new System.Windows.Forms.Button();
+            this.btngoto = new System.Windows.Forms.Button();
+            this.numIndex = new System.Windows.Forms.NumericUpDown();
+            this.lblitems = new System.Windows.Forms.Label();
+            this.lblitemPerPage = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.numIndex)).BeginInit();
             this.SuspendLayout();
             // 
             // textBox1
@@ -66,9 +73,9 @@
             this.columnHeader3});
             this.lvitems.FullRowSelect = true;
             this.lvitems.GridLines = true;
-            this.lvitems.Location = new System.Drawing.Point(12, 21);
+            this.lvitems.Location = new System.Drawing.Point(12, 33);
             this.lvitems.Name = "lvitems";
-            this.lvitems.Size = new System.Drawing.Size(568, 331);
+            this.lvitems.Size = new System.Drawing.Size(308, 392);
             this.lvitems.TabIndex = 3;
             this.lvitems.UseCompatibleStateImageBehavior = false;
             this.lvitems.View = System.Windows.Forms.View.Details;
@@ -90,7 +97,7 @@
             // 
             // btn1
             // 
-            this.btn1.Location = new System.Drawing.Point(423, 363);
+            this.btn1.Location = new System.Drawing.Point(110, 440);
             this.btn1.Name = "btn1";
             this.btn1.Size = new System.Drawing.Size(35, 31);
             this.btn1.TabIndex = 4;
@@ -100,7 +107,7 @@
             // 
             // btn2
             // 
-            this.btn2.Location = new System.Drawing.Point(464, 363);
+            this.btn2.Location = new System.Drawing.Point(151, 440);
             this.btn2.Name = "btn2";
             this.btn2.Size = new System.Drawing.Size(35, 31);
             this.btn2.TabIndex = 5;
@@ -110,7 +117,7 @@
             // 
             // btnnext
             // 
-            this.btnnext.Location = new System.Drawing.Point(505, 363);
+            this.btnnext.Location = new System.Drawing.Point(233, 440);
             this.btnnext.Name = "btnnext";
             this.btnnext.Size = new System.Drawing.Size(35, 31);
             this.btnnext.TabIndex = 6;
@@ -120,7 +127,7 @@
             // 
             // btnlast
             // 
-            this.btnlast.Location = new System.Drawing.Point(546, 363);
+            this.btnlast.Location = new System.Drawing.Point(274, 440);
             this.btnlast.Name = "btnlast";
             this.btnlast.Size = new System.Drawing.Size(35, 31);
             this.btnlast.TabIndex = 7;
@@ -130,8 +137,7 @@
             // 
             // btnprev
             // 
-            this.btnprev.Enabled = false;
-            this.btnprev.Location = new System.Drawing.Point(380, 363);
+            this.btnprev.Location = new System.Drawing.Point(67, 440);
             this.btnprev.Name = "btnprev";
             this.btnprev.Size = new System.Drawing.Size(35, 31);
             this.btnprev.TabIndex = 8;
@@ -139,21 +145,97 @@
             this.btnprev.UseVisualStyleBackColor = true;
             this.btnprev.Click += new System.EventHandler(this.btnprev_Click);
             // 
-            // lblpage
+            // lblpages
             // 
-            this.lblpage.AutoSize = true;
-            this.lblpage.Location = new System.Drawing.Point(541, 402);
-            this.lblpage.Name = "lblpage";
-            this.lblpage.Size = new System.Drawing.Size(13, 13);
-            this.lblpage.TabIndex = 9;
-            this.lblpage.Text = "1";
+            this.lblpages.AutoSize = true;
+            this.lblpages.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblpages.Location = new System.Drawing.Point(203, 490);
+            this.lblpages.Name = "lblpages";
+            this.lblpages.Size = new System.Drawing.Size(36, 20);
+            this.lblpages.TabIndex = 9;
+            this.lblpages.Text = "of n";
+            // 
+            // btnfirst
+            // 
+            this.btnfirst.Location = new System.Drawing.Point(26, 440);
+            this.btnfirst.Name = "btnfirst";
+            this.btnfirst.Size = new System.Drawing.Size(35, 31);
+            this.btnfirst.TabIndex = 10;
+            this.btnfirst.Text = "first";
+            this.btnfirst.UseVisualStyleBackColor = true;
+            this.btnfirst.Click += new System.EventHandler(this.btnfirst_Click);
+            // 
+            // btn3
+            // 
+            this.btn3.Location = new System.Drawing.Point(192, 440);
+            this.btn3.Name = "btn3";
+            this.btn3.Size = new System.Drawing.Size(35, 31);
+            this.btn3.TabIndex = 11;
+            this.btn3.Text = "3";
+            this.btn3.UseVisualStyleBackColor = true;
+            this.btn3.Click += new System.EventHandler(this.btn3_Click);
+            // 
+            // btngoto
+            // 
+            this.btngoto.Location = new System.Drawing.Point(80, 484);
+            this.btngoto.Name = "btngoto";
+            this.btngoto.Size = new System.Drawing.Size(76, 31);
+            this.btngoto.TabIndex = 13;
+            this.btngoto.Text = "go to page";
+            this.btngoto.UseVisualStyleBackColor = true;
+            this.btngoto.Click += new System.EventHandler(this.btngoto_Click);
+            // 
+            // numIndex
+            // 
+            this.numIndex.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numIndex.Location = new System.Drawing.Point(162, 486);
+            this.numIndex.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numIndex.Name = "numIndex";
+            this.numIndex.Size = new System.Drawing.Size(41, 27);
+            this.numIndex.TabIndex = 14;
+            this.numIndex.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numIndex.UpDownAlign = System.Windows.Forms.LeftRightAlignment.Left;
+            this.numIndex.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // lblitems
+            // 
+            this.lblitems.AutoSize = true;
+            this.lblitems.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblitems.Location = new System.Drawing.Point(12, 10);
+            this.lblitems.Name = "lblitems";
+            this.lblitems.Size = new System.Drawing.Size(18, 20);
+            this.lblitems.TabIndex = 15;
+            this.lblitems.Text = "n";
+            // 
+            // lblitemPerPage
+            // 
+            this.lblitemPerPage.AutoSize = true;
+            this.lblitemPerPage.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblitemPerPage.Location = new System.Drawing.Point(183, 9);
+            this.lblitemPerPage.Name = "lblitemPerPage";
+            this.lblitemPerPage.Size = new System.Drawing.Size(18, 20);
+            this.lblitemPerPage.TabIndex = 16;
+            this.lblitemPerPage.Text = "n";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(592, 423);
-            this.Controls.Add(this.lblpage);
+            this.ClientSize = new System.Drawing.Size(335, 529);
+            this.Controls.Add(this.lblitemPerPage);
+            this.Controls.Add(this.lblitems);
+            this.Controls.Add(this.numIndex);
+            this.Controls.Add(this.btngoto);
+            this.Controls.Add(this.btn3);
+            this.Controls.Add(this.btnfirst);
             this.Controls.Add(this.btnprev);
             this.Controls.Add(this.btnlast);
             this.Controls.Add(this.btnnext);
@@ -162,10 +244,13 @@
             this.Controls.Add(this.lvitems);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.lblpages);
+            this.MaximizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = " ";
+            this.Text = " Pagination";
             this.Load += new System.EventHandler(this.Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.numIndex)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -184,7 +269,13 @@
         private System.Windows.Forms.Button btnnext;
         private System.Windows.Forms.Button btnlast;
         private System.Windows.Forms.Button btnprev;
-        private System.Windows.Forms.Label lblpage;
+        private System.Windows.Forms.Label lblpages;
+        private System.Windows.Forms.Button btnfirst;
+        private System.Windows.Forms.Button btn3;
+        private System.Windows.Forms.Button btngoto;
+        private System.Windows.Forms.NumericUpDown numIndex;
+        private System.Windows.Forms.Label lblitems;
+        private System.Windows.Forms.Label lblitemPerPage;
     }
 }
 

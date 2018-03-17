@@ -7,168 +7,143 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using kitchanismo;
+
 namespace pagination
 {
     public partial class Form1 : Form
     {
+
+        private Pages  page = new Pages();
+        private Index index = new Index();
+        const int firstPage = 1;
+        int        lastPage;
+        
         public Form1()
         {
             InitializeComponent();
-
+            InitializePage();
         }
+
         private void Form1_Load(object sender, EventArgs e)
         {
-            loaddata(1, qtyperpage);
-            lblpage.Text = "1 of " + countpage();
-            disablebtn(false);
+            CurrentPage(firstPage);
         }
 
-        #region variables
-       
-        SqlConnection con = new SqlConnection();
-        SqlCommand cmd = new SqlCommand();
-        SqlDataReader dr;
-        string query;
-        const int qtyperpage = 10; //number of item per page
-        int first;
-        int second;
+        private void InitializePage()
+        {
+            page.numPerPage     = 9; // number of item per page
+            numIndex.Maximum    = page.count(page.numPerPage);//limit the num index max value
+            lblitems.Text       = page.rows().ToString() + " items";
+            lblitemPerPage.Text = "Items per page: " + page.numPerPage.ToString();
+        }
 
-        #endregion
+        private void NavigatePage(int i)
+        {
+            CurrentPage(Int32.Parse(btn3.Text) + i);
 
-        #region buttons
-       
+            btn1.Text = (Int32.Parse(btn1.Text) + i).ToString();
+            btn2.Text = (Int32.Parse(btn2.Text) + i).ToString();
+            btn3.Text = (Int32.Parse(btn3.Text) + i).ToString();
+        }
+
+        private void CurrentPage(int i)
+        {
+            page.fromPage = index.fromItem(i, page.numPerPage);
+            page.toPage    = page.numPerPage * i;
+            lblpages.Text  = page.getText(page.count(page.numPerPage));
+            numIndex.Value = i;
+
+            page.load(lvitems);
+        }
+
+        private void btnlast_Click(object sender, EventArgs e)
+        {
+            lastPage  = page.count(page.numPerPage);
+
+            CurrentPage(lastPage);
+
+            btn1.Text = (lastPage - 2).ToString();
+            btn2.Text = (lastPage - 1).ToString();
+            btn3.Text = lastPage.ToString();
+        }
+
+        private void btnfirst_Click(object sender, EventArgs e)
+        {
+            CurrentPage(firstPage);
+
+            btn1.Text = "1";
+            btn2.Text = "2";
+            btn3.Text = "3";
+        }
+
         private void btn1_Click(object sender, EventArgs e)
         {
-            loaddata(fromqty(Int32.Parse(btn1.Text)), qtyperpage * Int32.Parse(btn1.Text));
-            lblpage.Text = btn1.Text + " of " + countpage();
+            CurrentPage(Int32.Parse(btn1.Text));
         }
+
         private void btn2_Click(object sender, EventArgs e)
         {
-            loaddata(fromqty(Int32.Parse(btn2.Text)), qtyperpage * Int32.Parse(btn2.Text));
-            lblpage.Text = btn2.Text + " of " + countpage();
-            btnprev.Enabled = true;
+            CurrentPage(Int32.Parse(btn2.Text));
+        }
+        private void btn3_Click(object sender, EventArgs e)
+        {
+            CurrentPage(Int32.Parse(btn3.Text));
         }
        
         private void btnnext_Click(object sender, EventArgs e)
         {
-            if (countpage().ToString() == btn2.Text)
-            {
-                return;
-            }
+            var pages  = page.count(page.numPerPage).ToString();
 
-            first = Int32.Parse(btn1.Text) + 1;
-            second = Int32.Parse(btn2.Text) + 1;
-            btn1.Text = first.ToString();
-            btn2.Text = second.ToString();
-            loaddata(fromqty(second), qtyperpage * Int32.Parse(btn2.Text));
-            lblpage.Text = second + " of " + countpage();
-            btnprev.Enabled = true;
+            if (pages != btn3.Text)
+            {
+                //parameter 1 is increment the page
+                NavigatePage(1);
+            }
         }
 
         private void btnprev_Click(object sender, EventArgs e)
         {
             if (btn1.Text == "1")
             {
-                loaddata(1, qtyperpage);
-                lblpage.Text = "1 of " + countpage();
-                btnprev.Enabled = false; 
+                CurrentPage(firstPage);
+            }
+            else
+            {
+                //parameter -1 is decrement the page
+                NavigatePage(-1);
+            }
+        }
+
+        private void btngoto_Click(object sender, EventArgs e)
+        {
+            var index = Int32.Parse(numIndex.Value.ToString());
+            var pages = page.count(page.numPerPage);
+
+            if (index == Int32.Parse(btn3.Text))
+            {
                 return;
             }
-            else if (btn1.Text == "2") { btnprev.Enabled = false; }
 
-            first = Int32.Parse(btn1.Text) - 1;
-            second = Int32.Parse(btn2.Text) - 1;
-            btn1.Text = first.ToString();
-            btn2.Text = second.ToString();
-            loaddata(fromqty(second), qtyperpage * Int32.Parse(btn2.Text));
-            lblpage.Text = second + " of " + countpage();
-        }
-        private void btnlast_Click(object sender, EventArgs e)
-        {
-            loaddata(countrows() - (qtyperpage - 1), countrows());
-            first = Int32.Parse(countpage().ToString()) - 1;
-            second = Int32.Parse(countpage().ToString());
-            btn1.Text = first.ToString();
-            btn2.Text = second.ToString();
-            lblpage.Text = countpage() + " of " + countpage();
-            btnprev.Enabled = true;
-        }
-        #endregion
-
-        #region methods/functions
-      
-        void loaddata(int fromqty, int toqty)
-        {
-            con.Close();
-            lvitems.Items.Clear();
-            con.ConnectionString = @"Data Source=.\SQLEXPRESS;AttachDbFilename=|DataDirectory|\testdb.mdf;Integrated Security=True;Connect Timeout=30;User Instance=True";
-            query = " SELECT * FROM tblitems where id >=  " + fromqty + "   AND id <= " + toqty + " order by id";
-            con.Open();
-            cmd.CommandText = query;
-            cmd.Connection = con;
-            cmd.ExecuteNonQuery();
-            dr = cmd.ExecuteReader();
-
-            while (dr.Read())
+            if (index < 4)
             {
-                ListViewItem with_1 = lvitems.Items.Add((dr["id"]).ToString());
-                with_1.SubItems.Add(dr["item_name"].ToString());
-                with_1.SubItems.Add(dr["qty"].ToString());
+                CurrentPage(index);
+                btn1.Text = "1";
+                btn2.Text = "2";
+                btn3.Text = "3";
+                return;
             }
-            con.Close();
-        }
 
-        double countpage()
-        {
-           int res = countrows() / qtyperpage;
-           string str = (Double.Parse(countrows().ToString()) / qtyperpage).ToString();
-    
-           if (str.Contains("."))
-           {
-               res += 1;
-           }
-           return res;
-        }
-       
-        int countrows()
-        {
-            con.Close();
-            int rows = 0;
-            con.ConnectionString = @"Data Source=.\SQLEXPRESS;AttachDbFilename=|DataDirectory|\testdb.mdf;Integrated Security=True;Connect Timeout=30;User Instance=True";
-            query = "SELECT * FROM tblitems";
-            con.Open();
-            cmd.CommandText = query;
-            cmd.Connection = con;
-            dr = cmd.ExecuteReader();
-            while (dr.Read())
+            if (index <= pages)
             {
-                rows++;
+                CurrentPage(index);
+                btn1.Text = (index - 2).ToString();
+                btn2.Text = (index - 1).ToString();
+                btn3.Text = index.ToString();
+                return;
             }
-            return rows;
-        }
-       
-  
-        int fromqty(int num)
-        {
-            int j = 1;
-            for (int i = 0; i < num - 1; i++)
-            {
-               j += qtyperpage;    
-            }
-            return j;
+            
         }
 
-        void disablebtn(bool bl)
-        {
-            if (countrows() < qtyperpage)
-            {
-                btn2.Enabled = bl;
-                btnlast.Enabled = bl;
-                btnnext.Enabled = bl;
-            }
-        }
-
-
-        #endregion
     }
 }
