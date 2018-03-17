@@ -32,7 +32,7 @@ namespace pagination
 
         private void InitializePage()
         {
-            page.numPerPage     = 5; // number of item per page
+            page.numPerPage     = 10; // number of item per page
             numIndex.Maximum    = page.count(page.numPerPage);//limit the num index max value
             lblitems.Text       = page.rows().ToString() + " items";
             lblitemPerPage.Text = "Items per page: " + page.numPerPage.ToString();
@@ -45,8 +45,8 @@ namespace pagination
             btn1.Text = (Int32.Parse(btn1.Text) + i).ToString();
             btn2.Text = (Int32.Parse(btn2.Text) + i).ToString();
             btn3.Text = (Int32.Parse(btn3.Text) + i).ToString();
-        }
 
+        }
         private void CurrentPage(int i)
         {
             page.fromPage = index.fromItem(i, page.numPerPage);
